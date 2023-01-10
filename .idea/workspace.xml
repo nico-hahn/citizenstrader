@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a4e0be02-a433-48b4-a650-66ded00b8e7c" name="Changes" comment="increased code-quality. enhanced auto-complete" />
+    <list default="true" id="a4e0be02-a433-48b4-a650-66ded00b8e7c" name="Changes" comment="converted material command arguments to uppercase">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/qweide/citizenstrader/RecipeCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/qweide/citizenstrader/RecipeCommands.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -65,7 +68,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1673287389220</updated>
-      <workItem from="1673287391094" duration="21854000" />
+      <workItem from="1673287391094" duration="24961000" />
     </task>
     <task id="LOCAL-00001" summary="setup dependencies">
       <created>1673290621415</created>
@@ -102,7 +105,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673377855910</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="converted material command arguments to uppercase">
+      <created>1673378068494</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1673378068494</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -114,7 +124,8 @@
     <MESSAGE value="fixed reversed recipe input/output" />
     <MESSAGE value="added trade names autocomplete" />
     <MESSAGE value="increased code-quality. enhanced auto-complete" />
-    <option name="LAST_COMMIT_MESSAGE" value="increased code-quality. enhanced auto-complete" />
+    <MESSAGE value="converted material command arguments to uppercase" />
+    <option name="LAST_COMMIT_MESSAGE" value="converted material command arguments to uppercase" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

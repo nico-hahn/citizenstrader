@@ -24,12 +24,18 @@ public class RecipeCommands implements CommandExecutor, TabCompleter {
 
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
         switch (label) {
-            case "addtrade": return executeAddTrade(
-                commandSender, args[0], args[1].toUpperCase(), Integer.parseInt(args[2]), args[3].toUpperCase(), Integer.parseInt(args[4])
-            );
-            case "assigntrade": return executeAssignTrade(
-                commandSender, args[0], Integer.parseInt(args[1])
-            );
+            case "addtrade":
+                return executeAddTrade(
+                    commandSender, args[0], args[1].toUpperCase(), Integer.parseInt(args[2]), args[3].toUpperCase(), Integer.parseInt(args[4])
+                );
+            case "assigntrade":
+                return executeAssignTrade(
+                    commandSender, args[0], Integer.parseInt(args[1])
+                );
+            case "listtrades":
+                return executeListTrades(
+                    commandSender, args.length > 0 ? args[0] : null
+                );
             default:
                 commandSender.sendMessage("Something went wrong processing your command.");
                 break;
@@ -99,6 +105,40 @@ public class RecipeCommands implements CommandExecutor, TabCompleter {
         if (result)
             sender.sendMessage("Assigned trade successfully.");
         return result;
+    }
+
+    private boolean executeListTrades(
+        CommandSender sender,
+        String tradeName
+    ) {
+        if (tradeName == null){
+            sender.sendMessage(
+                "Names of all custom trades:",
+                String.join(", ", new ArrayList<>(trades.getTradeNames()))
+            );
+        }
+        else {
+            if (trades.getTradeNames().contains(tradeName)) {
+                StringBuilder sb = new StringBuilder();
+                sb.append("Takes: ");
+                MerchantRecipe recipe = trades.getRecipeByName(tradeName);
+                for(ItemStack i : recipe.getIngredients()) {
+                    sb.append(i.getAmount());
+                    sb.append("x");
+                    sb.append(i.getType().name());
+                    sb.append(", ");
+                }
+                sb.append("Gives: ");
+                sb.append(recipe.getResult().getAmount());
+                sb.append("x");
+                sb.append(recipe.getResult().getType().name());
+                sender.sendMessage(sb.toString());
+            }
+            else {
+                sender.sendMessage("Specified trade does not exist.");
+            }
+        }
+        return true;
     }
 }
 

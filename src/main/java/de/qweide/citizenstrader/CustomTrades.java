@@ -32,10 +32,6 @@ public class CustomTrades {
         return false;
     }
 
-    public MerchantRecipe getRecipe(String name) {
-        return availableRecipes.get(name);
-    }
-
     public ArrayList<MerchantRecipe> getAssignedRecipes(int npcId) {
         ArrayList<MerchantRecipe> recipes = new ArrayList<MerchantRecipe>();
         for(int i : assignedRecipes.keySet()) {
@@ -48,5 +44,9 @@ public class CustomTrades {
 
     public Set<String> getTradeNames() {
         return availableRecipes.keySet();
+    }
+
+    public MerchantRecipe getRecipeByName(String tradeName){
+        return availableRecipes.get(tradeName);
     }
 }
