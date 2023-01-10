@@ -21,11 +21,15 @@ public class CustomTrades {
         availableRecipes.put(recipeName, recipe);
     }
 
-    public void assignRecipe(int npcId, String recipeName) {
-        assignedRecipes.put(
+    public boolean assignRecipe(int npcId, String recipeName) {
+        if (availableRecipes.get(recipeName) != null) {
+            assignedRecipes.put(
                 npcId,
                 availableRecipes.get(recipeName)
-        );
+            );
+            return true;
+        }
+        return false;
     }
 
     public MerchantRecipe getRecipe(String name) {

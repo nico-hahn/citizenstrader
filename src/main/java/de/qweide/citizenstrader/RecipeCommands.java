@@ -1,5 +1,6 @@
 package de.qweide.citizenstrader;
 
+import com.google.common.base.MoreObjects;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -9,7 +10,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MerchantRecipe;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RecipeCommands implements CommandExecutor, TabCompleter {
 
@@ -20,68 +23,82 @@ public class RecipeCommands implements CommandExecutor, TabCompleter {
     }
 
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
-        if (label.equals("addtrade")) {
-            Material mat1 = Material.getMaterial(args[1]);
-            Material mat2 = Material.getMaterial(args[3]);
-            if(mat1 == null) {
-                commandSender.sendMessage(
-                        String.format("Input Material %s not found. Using OAK_LOG instead", args[1])
-                );
-                mat1 = Material.OAK_LOG;
-            }
-            if(mat2 == null) {
-                commandSender.sendMessage(
-                        String.format("Output Material %s not found. Using OAK_LOG instead", args[3])
-                );
-                mat2 = Material.OAK_LOG;
-            }
-            createTrade(
-                    args[0],
-                    mat1,
-                    Integer.parseInt(args[2]),
-                    mat2,
-                    Integer.parseInt(args[4]));
-            commandSender.sendMessage("Added trade successfully.");
-            return true;
-        }
-
-        if (label.equals("assigntrade")) {
-            assignTrade(
-                    args[0],
-                    Integer.parseInt(args[1])
+        switch (label) {
+            case "addtrade": return executeAddTrade(
+                commandSender, args[0], args[1], Integer.parseInt(args[2]), args[3], Integer.parseInt(args[4])
             );
-            commandSender.sendMessage("Assigned trade successfully.");
-            return true;
+            case "assigntrade": return executeAssignTrade(
+                commandSender, args[0], Integer.parseInt(args[1])
+            );
+            default:
+                commandSender.sendMessage("Something went wrong processing your command.");
+                break;
         }
-        commandSender.sendMessage("Something went wrong processing your command.");
         return false;
     }
 
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args){
+    public List<String> onTabComplete(
+        CommandSender sender,
+        Command command,
+        String alias,
+        String[] args
+    ){
         if(command.getName().equalsIgnoreCase("addtrade")){
             List<String> l = new ArrayList<String>();
             if(args.length == 1) {
-                l.addAll(trades.getTradeNames());
+                return trades
+                    .getTradeNames()
+                    .stream().filter(p -> p.contains(args[0]))
+                    .collect(Collectors.toList());
             }
             else if (args.length == 2 || args.length == 4){
-                for(Material m : Material.values()) {
-                    l.add(m.name());
-                }
+                return Arrays
+                    .stream(Material.values())
+                    .map(m -> m.name())
+                    .filter(m -> m.contains(args[args.length - 1]))
+                    .collect(Collectors.toList());
             }
-            return l;
         }
         return null;
     }
 
-    private void createTrade(String name, Material in, int inCount, Material out, int outCount) {
-        ItemStack result = new ItemStack(out, outCount);
+    private boolean executeAddTrade(
+        CommandSender sender,
+        String recipeName,
+        String inputMaterialName,
+        int inputMaterialCount,
+        String outputMaterialName,
+        int outputMaterialCount
+    ) {
+        Material materialIn = Material.getMaterial(inputMaterialName);
+        Material materialOut = Material.getMaterial(outputMaterialName);
+        if(materialIn == null || materialOut == null) {
+            sender.sendMessage(
+                String.format(
+                    "Material(s) %s %s not found.",
+                    (materialIn == null) ? inputMaterialName : "",
+                    (materialOut == null) ? outputMaterialName : ""
+                )
+            );
+            return false;
+        }
+        ItemStack result = new ItemStack(materialOut, outputMaterialCount);
         MerchantRecipe recipe = new MerchantRecipe(result, 0, 64, false);
-        recipe.addIngredient(new ItemStack(in, inCount));
-        trades.addRecipe(name, recipe);
+        recipe.addIngredient(new ItemStack(materialIn, inputMaterialCount));
+        trades.addRecipe(recipeName, recipe);
+        sender.sendMessage("Added trade successfully.");
+        return true;
     }
 
-    private void assignTrade(String recipeName, int npcId) {
-        trades.assignRecipe(npcId, recipeName);
+    private boolean executeAssignTrade(
+        CommandSender sender,
+        String recipeName,
+        int npcId
+    ) {
+        boolean result = trades.assignRecipe(npcId, recipeName);
+        if (result)
+            sender.sendMessage("Assigned trade successfully.");
+        return result;
     }
 }
 

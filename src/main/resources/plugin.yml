@@ -4,9 +4,17 @@ main: de.qweide.citizenstrader.CitizensTraderPlugin
 commands:
   addtrade:
     description: adds a custom trade recipe
-    usage: /<command> <name> <item> <amount> <item> <amount>
-    permission: citizenstrader.addtrade
+    usage: /<command> <tradename> <item> <amount> <item> <amount>
+    permission: citizenstrader.trades
+  listtrades:
+    description: lists the name of all trades or the details of a specific trade
+    usage: /<command> [<tradename>]
+    permission: citizenstrader.trades
+  deletetrade:
+    description: deletes the trade with the given name and all of its assignments
+    usage: /<command> <tradename>
+    permission: citizenstrader.trades
   assigntrade:
     description: assigns a custom trade recipe name to an npc
     usage: /<command> <recipename> <npcid>
-    permission: citizenstrader.assigntrade
+    permission: citizenstrader.assignments

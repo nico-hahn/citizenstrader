@@ -4,16 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a4e0be02-a433-48b4-a650-66ded00b8e7c" name="Changes" comment="setup dependencies">
-      <change afterPath="$PROJECT_DIR$/deploy_test.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/de/qweide/citizenstrader/CitizensTraderPlugin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/de/qweide/citizenstrader/CustomTrades.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/de/qweide/citizenstrader/RecipeCommands.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/de/qweide/citizenstrader/TraderTrait.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="a4e0be02-a433-48b4-a650-66ded00b8e7c" name="Changes" comment="added trade names autocomplete">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/qweide/citizenstrader/CustomTrades.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/qweide/citizenstrader/CustomTrades.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/qweide/citizenstrader/RecipeCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/qweide/citizenstrader/RecipeCommands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +54,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.JavaFX",
+    "settings.editor.selected.configurable": "preferences.sourceCode.Java",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -75,7 +71,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1673287389220</updated>
-      <workItem from="1673287391094" duration="12393000" />
+      <workItem from="1673287391094" duration="21321000" />
     </task>
     <task id="LOCAL-00001" summary="setup dependencies">
       <created>1673290621415</created>
@@ -84,7 +80,28 @@
       <option name="project" value="LOCAL" />
       <updated>1673290621415</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="implemented basic functionality">
+      <created>1673310787841</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1673310787841</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fixed reversed recipe input/output">
+      <created>1673311149150</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1673311149150</updated>
+    </task>
+    <task id="LOCAL-00004" summary="added trade names autocomplete">
+      <created>1673311782817</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1673311782817</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -92,7 +109,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="setup dependencies" />
-    <option name="LAST_COMMIT_MESSAGE" value="setup dependencies" />
+    <MESSAGE value="implemented basic functionality" />
+    <MESSAGE value="fixed reversed recipe input/output" />
+    <MESSAGE value="added trade names autocomplete" />
+    <option name="LAST_COMMIT_MESSAGE" value="added trade names autocomplete" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
