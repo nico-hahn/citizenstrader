@@ -1,0 +1,12 @@
+name: CitizensTraderPlugin
+version: 1.0
+main: de.qweide.citizenstrader.CitizensTraderPlugin
+commands:
+  addtrade:
+    description: adds a custom trade recipe
+    usage: /<command> <name> <item> <amount> <item> <amount>
+    permission: citizenstrader.addtrade
+  assigntrade:
+    description: assigns a custom trade recipe name to an npc
+    usage: /<command> <recipename> <npcid>
+    permission: citizenstrader.assigntrade
