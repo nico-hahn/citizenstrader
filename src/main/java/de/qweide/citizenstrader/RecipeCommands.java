@@ -25,7 +25,7 @@ public class RecipeCommands implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
         switch (label) {
             case "addtrade": return executeAddTrade(
-                commandSender, args[0], args[1], Integer.parseInt(args[2]), args[3], Integer.parseInt(args[4])
+                commandSender, args[0], args[1].toUpperCase(), Integer.parseInt(args[2]), args[3].toUpperCase(), Integer.parseInt(args[4])
             );
             case "assigntrade": return executeAssignTrade(
                 commandSender, args[0], Integer.parseInt(args[1])

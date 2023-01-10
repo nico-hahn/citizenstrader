@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a4e0be02-a433-48b4-a650-66ded00b8e7c" name="Changes" comment="added trade names autocomplete">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/qweide/citizenstrader/CustomTrades.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/qweide/citizenstrader/CustomTrades.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/qweide/citizenstrader/RecipeCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/qweide/citizenstrader/RecipeCommands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
-    </list>
+    <list default="true" id="a4e0be02-a433-48b4-a650-66ded00b8e7c" name="Changes" comment="increased code-quality. enhanced auto-complete" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -71,7 +65,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1673287389220</updated>
-      <workItem from="1673287391094" duration="21321000" />
+      <workItem from="1673287391094" duration="21854000" />
     </task>
     <task id="LOCAL-00001" summary="setup dependencies">
       <created>1673290621415</created>
@@ -101,7 +95,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673311782817</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="increased code-quality. enhanced auto-complete">
+      <created>1673377855910</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1673377855910</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -112,7 +113,8 @@
     <MESSAGE value="implemented basic functionality" />
     <MESSAGE value="fixed reversed recipe input/output" />
     <MESSAGE value="added trade names autocomplete" />
-    <option name="LAST_COMMIT_MESSAGE" value="added trade names autocomplete" />
+    <MESSAGE value="increased code-quality. enhanced auto-complete" />
+    <option name="LAST_COMMIT_MESSAGE" value="increased code-quality. enhanced auto-complete" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
