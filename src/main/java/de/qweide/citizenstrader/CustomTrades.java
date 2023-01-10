@@ -5,6 +5,7 @@ import org.bukkit.inventory.MerchantRecipe;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class CustomTrades {
 
@@ -39,5 +40,9 @@ public class CustomTrades {
             }
         }
         return recipes;
+    }
+
+    public Set<String> getTradeNames() {
+        return availableRecipes.keySet();
     }
 }

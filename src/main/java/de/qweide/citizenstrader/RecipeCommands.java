@@ -59,8 +59,11 @@ public class RecipeCommands implements CommandExecutor, TabCompleter {
 
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args){
         if(command.getName().equalsIgnoreCase("addtrade")){
-            List<String> l = new ArrayList<String>(); //makes a ArrayList
-            if (args.length == 2 || args.length == 4){
+            List<String> l = new ArrayList<String>();
+            if(args.length == 1) {
+                l.addAll(trades.getTradeNames());
+            }
+            else if (args.length == 2 || args.length == 4){
                 for(Material m : Material.values()) {
                     l.add(m.name());
                 }
