@@ -65,17 +65,16 @@ public class RecipeCommands implements CommandExecutor, TabCompleter {
         String[] args
     ){
         if(command.getName().equalsIgnoreCase("addtrade")){
-            List<String> l = new ArrayList<String>();
-            if(args.length == 1) {
+            /*if(args.length == 1) {
                 return trades
                     .getTradeNames()
                     .stream().filter(p -> p.contains(args[0]))
                     .collect(Collectors.toList());
-            }
-            else if (args.length == 2 || args.length == 4){
+            }*/
+            if (args.length == 2 || args.length == 4){
                 return Arrays
                     .stream(Material.values())
-                    .map(m -> m.name())
+                    .map(Enum::name)
                     .filter(m -> m.contains(args[args.length - 1]))
                     .collect(Collectors.toList());
             }

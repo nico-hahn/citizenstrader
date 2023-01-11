@@ -1,6 +1,7 @@
 name: CitizensTraderPlugin
 version: 1.0
 main: de.qweide.citizenstrader.CitizensTraderPlugin
+api-version: 1.15
 commands:
   addtrade:
     description: adds a custom trade recipe

@@ -8,6 +8,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Merchant;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
+
 public class CitizensTraderPlugin extends JavaPlugin {
 
     private CustomTrades customTrades;
@@ -21,10 +23,13 @@ public class CitizensTraderPlugin extends JavaPlugin {
                 );
         customTrades = new CustomTrades();
         RecipeCommands commands = new RecipeCommands(customTrades);
-        this.getCommand("addtrade").setTabCompleter(commands);
-        this.getCommand("addtrade").setExecutor(commands);
-        this.getCommand("assigntrade").setTabCompleter(commands);
-        this.getCommand("assigntrade").setExecutor(commands);
+        for(String command : new String[]{
+            "addtrade", "assigntrade", "listtrades", "deletetrade",
+            "assignlist", "assigndelete"
+        }){
+            this.getCommand(command).setTabCompleter(commands);
+            this.getCommand(command).setExecutor(commands);
+        }
     }
     @Override
     public void onDisable() {

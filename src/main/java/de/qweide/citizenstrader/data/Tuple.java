@@ -1,6 +1,11 @@
 package de.qweide.citizenstrader.data;
 
-public class Tuple<T, U> {
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+public class Tuple<T, U> implements JsonSerializable {
 
     private T firstValue;
 
@@ -34,5 +39,19 @@ public class Tuple<T, U> {
 
     public void setFirstValue(T firstValue) {
         this.firstValue = firstValue;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        return new JSONObject();
+    }
+
+    @Override
+    public Tuple<T, U> fromJsonFile(String fileName) throws IOException {
+        JSONArray data = JsonSerializable.getJsonArrayFromFile(fileName);
+        return new Tuple<T, U>(
+            (T)data.get(0),
+            (U)data.get(1)
+        );
     }
 }
