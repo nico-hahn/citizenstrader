@@ -18,3 +18,7 @@ commands:
     description: assigns a custom trade recipe name to an npc
     usage: /<command> <recipename> <npcid>
     permission: citizenstrader.assignments
+  assignlist:
+    description: lists all trades that are assigned to a given npc
+    usage: /<command> <npcid>
+    permission: citizenstrader.assignments
