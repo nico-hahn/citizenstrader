@@ -46,6 +46,9 @@ public class CustomTrades {
             (recipeName == null || t.getSecondValue().equals(recipeName))
         );
     }
+    public boolean deleteAssignment(int npcId) {
+        return deleteAssignment(npcId, null);
+    }
 
     public List<String> getAssignedRecipeNames(int npcId) {
         return assignedRecipes.stream()

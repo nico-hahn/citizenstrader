@@ -10,7 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class CitizensTraderPlugin extends JavaPlugin {
 
-    CustomTrades customTrades;
+    private CustomTrades customTrades;
     @Override
     public void onEnable() {
         getLogger().info("Citizens Trader Plugin enabled.");
@@ -40,5 +40,9 @@ public class CitizensTraderPlugin extends JavaPlugin {
         Merchant merchant = Bukkit.createMerchant(npc.getRawName());
         merchant.setRecipes(customTrades.getAssignedRecipes(npc.getId()));
         clickPlayer.openMerchant(merchant, true);
+    }
+
+    public void onNpcRemoved(int npcId) {
+        this.customTrades.deleteAssignment(npcId);
     }
 }
