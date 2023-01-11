@@ -1,6 +1,3 @@
-./deploy_test.sh
-./deploy_prod.sh
-
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
@@ -40,3 +37,5 @@ build/
 
 ### Mac OS ###
 .DS_Store
+/deploy_prod.sh
+/deploy_test.sh
