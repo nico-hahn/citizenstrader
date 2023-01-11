@@ -22,3 +22,7 @@ commands:
     description: lists all trades that are assigned to a given npc
     usage: /<command> <npcid>
     permission: citizenstrader.assignments
+  assigndelete:
+    description: deletes all or a specified trade that is assigned to a given npc
+    usage: /<command> <npcid> [<tradename>]
+    permission: citizenstrader.assignments

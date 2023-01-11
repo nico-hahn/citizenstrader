@@ -20,6 +20,15 @@ public class CustomTrades {
         availableRecipes.put(recipeName, recipe);
     }
 
+    public boolean deleteRecipe(String recipeName) {
+        if(availableRecipes.containsKey(recipeName)) {
+            availableRecipes.remove(recipeName);
+            assignedRecipes.removeIf(t -> t.getSecondValue().equals(recipeName));
+            return true;
+        }
+        return false;
+    }
+
     public boolean assignRecipe(int npcId, String recipeName) {
         if (availableRecipes.get(recipeName) != null) {
             assignedRecipes.add(new Tuple<>(
@@ -31,13 +40,23 @@ public class CustomTrades {
         return false;
     }
 
-    public ArrayList<MerchantRecipe> getAssignedRecipes(int npcId) {
-        ArrayList<MerchantRecipe> recipes = new ArrayList<MerchantRecipe>();
-        for(String recipeName : assignedRecipes.stream()
-            .filter(t -> t.getFirstValue() == npcId)
+    public boolean deleteAssignment(int npcId, String recipeName) {
+        return assignedRecipes.removeIf(t ->
+            (t.getFirstValue().equals(npcId)) &&
+            (recipeName == null || t.getSecondValue().equals(recipeName))
+        );
+    }
+
+    public List<String> getAssignedRecipeNames(int npcId) {
+        return assignedRecipes.stream()
+            .filter(t -> t.getFirstValue().equals(npcId))
             .map(Tuple::getSecondValue)
-            .collect(Collectors.toList())
-        ) {
+            .collect(Collectors.toList());
+    }
+
+    public ArrayList<MerchantRecipe> getAssignedRecipes(int npcId) {
+        ArrayList<MerchantRecipe> recipes = new ArrayList<>();
+        for(String recipeName : getAssignedRecipeNames(npcId)) {
             if(availableRecipes.get(recipeName) != null) {
                 recipes.add(availableRecipes.get(recipeName));
             }

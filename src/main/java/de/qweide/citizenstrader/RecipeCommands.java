@@ -1,6 +1,5 @@
 package de.qweide.citizenstrader;
 
-import com.google.common.base.MoreObjects;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -34,7 +33,23 @@ public class RecipeCommands implements CommandExecutor, TabCompleter {
                 );
             case "listtrades":
                 return executeListTrades(
-                    commandSender, args.length > 0 ? args[0] : null
+                    commandSender, args.length >= 1 ? args[0] : null
+                );
+            case "deletetrade":
+                return executeDeleteTrade(
+                    commandSender,
+                    args[0]
+                );
+            case "assignlist":
+                return executeListAssignments(
+                    commandSender,
+                    Integer.parseInt(args[0])
+                );
+            case "assigndelete":
+                return executeDeleteAssignment(
+                    commandSender,
+                    Integer.parseInt(args[0]),
+                    args.length >= 2 ? args[1] : null
                 );
             default:
                 commandSender.sendMessage("Something went wrong processing your command.");
@@ -138,6 +153,47 @@ public class RecipeCommands implements CommandExecutor, TabCompleter {
                 sender.sendMessage("Specified trade does not exist.");
             }
         }
+        return true;
+    }
+
+    private boolean executeDeleteTrade(
+        CommandSender sender,
+        String tradeName
+    ) {
+        sender.sendMessage(String.format(
+            trades.deleteRecipe(tradeName) ?
+                "Trade %s has been deleted." :
+                "Trade %s has not been found.",
+            tradeName
+        ));
+        return true;
+    }
+
+    private boolean executeListAssignments(
+        CommandSender sender,
+        int npcId
+    ) {
+        sender.sendMessage(
+            String.format("Trades assigned to npc %s", npcId),
+            String.join(", ", trades.getAssignedRecipeNames(npcId))
+        );
+        return true;
+    }
+
+    private boolean executeDeleteAssignment(
+        CommandSender sender,
+        int npcId,
+        String tradeName
+    ) {
+        sender.sendMessage(
+            trades.deleteAssignment(npcId, tradeName) ?
+                String.format(
+                    "Assignment(s)%s to NPC %s deleted successfully.",
+                    (tradeName != null) ? String.format(" of trade %s", tradeName) : "",
+                    npcId
+                ) :
+                "Assignment(s) not found. Nothing has been deleted."
+        );
         return true;
     }
 }
