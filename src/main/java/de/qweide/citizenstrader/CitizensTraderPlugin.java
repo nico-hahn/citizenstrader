@@ -7,8 +7,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Merchant;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.checkerframework.checker.units.qual.C;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.OpenOption;
+import java.nio.file.StandardOpenOption;
+import java.util.logging.Level;
 
 public class CitizensTraderPlugin extends JavaPlugin {
 
@@ -21,7 +27,26 @@ public class CitizensTraderPlugin extends JavaPlugin {
                 .registerTrait(
                         net.citizensnpcs.api.trait.TraitInfo.create(TraderTrait.class)
                 );
+    }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
         customTrades = new CustomTrades();
+        File file = new File(getDataFolder(), "data.json");
+        if (file.exists()) {
+            try {
+                customTrades = new CustomTrades().fromJson(
+                    Files.readString(file.toPath())
+                );
+            } catch (IOException e) {
+                getLogger().log(
+                    Level.WARNING,
+                    "No trades and assignments have been loaded because of an error:");
+                getLogger().log(Level.SEVERE, e.getMessage());
+            }
+
+        }
         RecipeCommands commands = new RecipeCommands(customTrades);
         for(String command : new String[]{
             "addtrade", "assigntrade", "listtrades", "deletetrade",
@@ -31,9 +56,23 @@ public class CitizensTraderPlugin extends JavaPlugin {
             this.getCommand(command).setExecutor(commands);
         }
     }
+
     @Override
     public void onDisable() {
         getLogger().info("Citizens Trader Plugin disabled.");
+        File file = new File(getDataFolder(), "data.json");
+        try {
+            if(!file.exists())
+                file.createNewFile();
+            Files.writeString(
+                file.toPath(),
+                customTrades.toJson().toString(4)
+            );
+        } catch (IOException e) {
+            getLogger().log(Level.SEVERE, e.getMessage());
+        }
+
+
     }
 
     @Override

@@ -103,7 +103,7 @@ public class RecipeCommands implements CommandExecutor, TabCompleter {
             return false;
         }
         ItemStack result = new ItemStack(materialOut, outputMaterialCount);
-        MerchantRecipe recipe = new MerchantRecipe(result, 0, 64, false);
+        MerchantRecipe recipe = new MerchantRecipe(result, 0, Integer.MAX_VALUE, false);
         recipe.addIngredient(new ItemStack(materialIn, inputMaterialCount));
         trades.addRecipe(recipeName, recipe);
         sender.sendMessage("Added trade successfully.");

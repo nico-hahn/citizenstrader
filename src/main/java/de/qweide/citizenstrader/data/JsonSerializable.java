@@ -13,16 +13,10 @@ public interface JsonSerializable {
 
     JSONObject toJson();
 
-    Object fromJsonFile(String json) throws IOException;
+    Object fromJson(String json) throws IOException;
 
-    static JSONObject getJsonObjectFromFile(String fileName) throws IOException {
+    static JSONObject getJsonFromFile(String fileName) throws IOException {
         return new JSONObject(
-            Files.readString(Path.of(fileName))
-        );
-    }
-
-    static JSONArray getJsonArrayFromFile(String fileName) throws IOException {
-        return new JSONArray(
             Files.readString(Path.of(fileName))
         );
     }

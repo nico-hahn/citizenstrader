@@ -16,6 +16,11 @@ public class Tuple<T, U> implements JsonSerializable {
         this.secondValue = second;
     }
 
+    public Tuple() {
+        firstValue = null;
+        secondValue = null;
+    }
+
     @Override
     public boolean equals(Object t) {
         if (!(t instanceof Tuple))
@@ -43,15 +48,17 @@ public class Tuple<T, U> implements JsonSerializable {
 
     @Override
     public JSONObject toJson() {
-        return new JSONObject();
+        return new JSONObject()
+            .put("first", firstValue)
+            .put("second", secondValue);
     }
 
     @Override
-    public Tuple<T, U> fromJsonFile(String fileName) throws IOException {
-        JSONArray data = JsonSerializable.getJsonArrayFromFile(fileName);
+    public Tuple<T, U> fromJson(String json) throws IOException {
+        JSONObject data = JsonSerializable.getJsonFromFile(json);
         return new Tuple<T, U>(
-            (T)data.get(0),
-            (U)data.get(1)
+            (T)data.get("first"),
+            (U)data.get("second")
         );
     }
 }
