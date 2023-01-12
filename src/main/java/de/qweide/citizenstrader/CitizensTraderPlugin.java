@@ -39,6 +39,14 @@ public class CitizensTraderPlugin extends JavaPlugin {
                 customTrades = new CustomTrades().fromJson(
                     Files.readString(file.toPath())
                 );
+                getLogger().log(
+                    Level.INFO,
+                    String.format(
+                        "Loaded %s trades and %s trade assignments",
+                        customTrades.getTradeCount(),
+                        customTrades.getAssignedCount()
+                    )
+                );
             } catch (IOException e) {
                 getLogger().log(
                     Level.WARNING,
@@ -67,6 +75,14 @@ public class CitizensTraderPlugin extends JavaPlugin {
             Files.writeString(
                 file.toPath(),
                 customTrades.toJson().toString(4)
+            );
+            getLogger().log(
+                Level.INFO,
+                String.format(
+                    "Saved %s trades and %s trade assignments",
+                    customTrades.getTradeCount(),
+                    customTrades.getAssignedCount()
+                )
             );
         } catch (IOException e) {
             getLogger().log(Level.SEVERE, e.getMessage());

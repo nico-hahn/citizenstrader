@@ -21,6 +21,14 @@ public class CustomTrades implements JsonSerializable {
         availableRecipes = new HashMap<>();
     }
 
+    public int getTradeCount() {
+        return availableRecipes.size();
+    }
+
+    public int getAssignedCount() {
+        return assignedRecipes.size();
+    }
+
     public void addRecipe(String recipeName, MerchantRecipe recipe) {
         availableRecipes.put(recipeName, new MerchantRecipeSerializable(recipe));
     }
