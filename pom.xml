@@ -32,6 +32,35 @@
         </configuration>
         <version>3.8.0</version>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.4.1</version>
+        <configuration>
+          <relocations>
+            <relocation>
+              <pattern>org.json</pattern>
+              <shadedPattern>my.org.json</shadedPattern>
+            </relocation>
+          </relocations>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <artifactSet>
+                <excludes>
+                  <exclude>net.citizensnpcs</exclude>
+                  <exclude>org.spigotmc</exclude>
+                </excludes>
+              </artifactSet>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
@@ -40,6 +69,7 @@
       <groupId>org.json</groupId>
       <artifactId>json</artifactId>
       <version>20220924</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>net.citizensnpcs</groupId>
