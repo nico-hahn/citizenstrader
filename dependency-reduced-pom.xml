@@ -4,7 +4,7 @@
   <groupId>org.example</groupId>
   <artifactId>CitizensTrades</artifactId>
   <name>Archetype - CitizensTrades</name>
-  <version>1.0-SNAPSHOT</version>
+  <version>alpha-0.1-SNAPSHOT</version>
   <url>http://maven.apache.org</url>
   <build>
     <plugins>
