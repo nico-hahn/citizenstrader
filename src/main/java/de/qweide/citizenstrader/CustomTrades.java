@@ -106,14 +106,17 @@ public class CustomTrades implements JsonSerializable {
         CustomTrades customTrades = new CustomTrades();
         JSONObject data = new JSONObject(json);
         for (Object jsonTuple : data.getJSONArray("assigned")){
-            Tuple t = new Tuple().fromJson((String) jsonTuple);
+            Tuple t = new Tuple().fromJson(jsonTuple.toString());
             customTrades.assignedRecipes.add(t);
         }
         for (String key : data.getJSONObject("trades").keySet()) {
             customTrades.availableRecipes.put(
                 key,
                 new MerchantRecipeSerializable().fromJson(
-                    data.getJSONObject("trades").getString(key)
+                    data
+                        .getJSONObject("trades")
+                        .getJSONObject(key)
+                        .toString()
                 )
             );
         }

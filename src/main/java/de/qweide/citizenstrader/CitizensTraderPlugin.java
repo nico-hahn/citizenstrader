@@ -27,11 +27,6 @@ public class CitizensTraderPlugin extends JavaPlugin {
                 .registerTrait(
                         net.citizensnpcs.api.trait.TraitInfo.create(TraderTrait.class)
                 );
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
         customTrades = new CustomTrades();
         File file = new File(getDataFolder(), "data.json");
         if (file.exists()) {
@@ -68,8 +63,10 @@ public class CitizensTraderPlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         getLogger().info("Citizens Trader Plugin disabled.");
-        File file = new File(getDataFolder(), "data.json");
         try {
+            if(!getDataFolder().isDirectory())
+                getDataFolder().mkdir();
+            File file = new File(getDataFolder(), "data.json");
             if(!file.exists())
                 file.createNewFile();
             Files.writeString(

@@ -55,7 +55,7 @@ public class Tuple<T, U> implements JsonSerializable {
 
     @Override
     public Tuple<T, U> fromJson(String json) throws IOException {
-        JSONObject data = JsonSerializable.getJsonFromFile(json);
+        JSONObject data = new JSONObject(json);
         return new Tuple<T, U>(
             (T)data.get("first"),
             (U)data.get("second")
