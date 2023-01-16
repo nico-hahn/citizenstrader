@@ -25,7 +25,14 @@ public class RecipeCommands implements CommandExecutor, TabCompleter {
         switch (label) {
             case "addtrade":
                 return executeAddTrade(
-                    commandSender, args[0], args[1].toUpperCase(), Integer.parseInt(args[2]), args[3].toUpperCase(), Integer.parseInt(args[4])
+                    commandSender,
+                    args[0],
+                    args[1].toUpperCase(),
+                    Integer.parseInt(args[2]),
+                    args[3].toUpperCase(),
+                    Integer.parseInt(args[4]),
+                    args.length >= 6 ? args[5].toUpperCase() : null,
+                    args.length >= 7 ? Integer.parseInt(args[6]) : null
                 );
             case "assigntrade":
                 return executeAssignTrade(
@@ -85,26 +92,37 @@ public class RecipeCommands implements CommandExecutor, TabCompleter {
     private boolean executeAddTrade(
         CommandSender sender,
         String recipeName,
-        String inputMaterialName,
-        int inputMaterialCount,
-        String outputMaterialName,
-        int outputMaterialCount
+        String resultMaterialName,
+        int resultMaterialCount,
+        String ingredient1MaterialName,
+        int ingredient1MaterialCount,
+        String ingredient2MaterialName,
+        Integer ingredient2MaterialCount
     ) {
-        Material materialIn = Material.getMaterial(inputMaterialName);
-        Material materialOut = Material.getMaterial(outputMaterialName);
-        if(materialIn == null || materialOut == null) {
+        Material material1In = Material.getMaterial(ingredient1MaterialName);
+        Material material2In = null;
+        if (ingredient2MaterialName != null) {
+            material2In = Material.getMaterial(ingredient2MaterialName);
+        }
+        Material materialOut = Material.getMaterial(resultMaterialName);
+        if(material1In == null || materialOut == null) {
             sender.sendMessage(
                 String.format(
-                    "Material(s) %s %s not found.",
-                    (materialIn == null) ? inputMaterialName : "",
-                    (materialOut == null) ? outputMaterialName : ""
+                    "Material(s) %s %s %s not found.",
+                    (material1In == null) ? ingredient1MaterialName : "",
+                    (material2In == null && ingredient2MaterialName != null) ?
+                        ingredient2MaterialName : "",
+                    (materialOut == null) ? resultMaterialName : ""
                 )
             );
             return false;
         }
-        ItemStack result = new ItemStack(materialOut, outputMaterialCount);
+        ItemStack result = new ItemStack(materialOut, resultMaterialCount);
         MerchantRecipe recipe = new MerchantRecipe(result, 0, Integer.MAX_VALUE, false);
-        recipe.addIngredient(new ItemStack(materialIn, inputMaterialCount));
+        recipe.addIngredient(new ItemStack(material1In, ingredient1MaterialCount));
+        if(material2In != null && ingredient2MaterialCount != null) {
+            recipe.addIngredient(new ItemStack(material2In, ingredient2MaterialCount));
+        }
         trades.addRecipe(recipeName, recipe);
         sender.sendMessage("Added trade successfully.");
         return true;
