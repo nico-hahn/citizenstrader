@@ -78,7 +78,7 @@ public class RecipeCommands implements CommandExecutor, TabCompleter {
                     .stream().filter(p -> p.contains(args[0]))
                     .collect(Collectors.toList());
             }*/
-            if (args.length == 2 || args.length == 4){
+            if (args.length == 2 || args.length == 4 || args.length == 6){
                 return Arrays
                     .stream(Material.values())
                     .map(Enum::name)
