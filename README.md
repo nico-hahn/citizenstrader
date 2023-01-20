@@ -14,40 +14,40 @@ is required.
 ## Usage
 ### Process
 * Assign *trader* trait to NPC.
-* Create custom MerchantRecipe using the *addtrade* command.
-* Assign custom trade to NPC using the *assigntrade* command.
+* Create custom MerchantRecipe using the *addrecipe* command.
+* Assign custom trade to NPC using the *assignrecipe* command.
 
 ### Commands
 
-#### addtrade
+#### addrecipe
 ```
-/addtrade <recipename> <item> <amount> <item> <amount>
+/addrecipe <recipename> <item> <amount> <item> <amount>
 ```
 Creates a custom MerchantRecipe with the given name. First item + amount
 pair is the ingredient; second item + amount pair is the result.
 As of now, recipes containing
 multiple ingredeients are not supported.
 
-#### deletetrade
+#### deleterecipe
 ```
-/deletetrade <recipename>
+/deleterecipe <recipename>
 ```
 Deletes the custom MerchantRecipe with the given name, if it
 exists. If the recipe is assigned to a NPC, the link will be
 deleted automatically.
 
-#### listtrades
+#### listrecipes
 ```
-/listtrades [<recipename>]
+/listrecipes [<recipename>]
 ```
 Shows a list of all custom MerchantRecipes that are available.
 If the optional parameter *recipename* is given, the ingredients
 and result of the specified recipe is
 shown, instead.
 
-#### assigntrade
+#### assignrecipe
 ```
-/assigntrade <recipename> <npcid>
+/assignrecipe <recipename> <npcid>
 ```
 Assigns the recipe with the given *recipename* to the NPC that
 has the given *npcid*. The NPC will then offer a trade that matches
