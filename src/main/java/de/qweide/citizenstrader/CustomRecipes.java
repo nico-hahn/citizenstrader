@@ -11,17 +11,17 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class CustomTrades implements JsonSerializable {
+public class CustomRecipes implements JsonSerializable {
 
     private ArrayList<Tuple<Integer, String>> assignedRecipes;
     private Map<String, MerchantRecipeSerializable> availableRecipes;
 
-    public CustomTrades() {
+    public CustomRecipes() {
         assignedRecipes = new ArrayList<>();
         availableRecipes = new HashMap<>();
     }
 
-    public int getTradeCount() {
+    public int getRecipeCount() {
         return availableRecipes.size();
     }
 
@@ -80,12 +80,12 @@ public class CustomTrades implements JsonSerializable {
         return recipes;
     }
 
-    public Set<String> getTradeNames() {
+    public Set<String> getRecipeNames() {
         return availableRecipes.keySet();
     }
 
-    public MerchantRecipe getRecipeByName(String tradeName){
-        return availableRecipes.get(tradeName);
+    public MerchantRecipe getRecipeByName(String recipeName){
+        return availableRecipes.get(recipeName);
     }
 
     @Override
@@ -93,33 +93,33 @@ public class CustomTrades implements JsonSerializable {
         JSONArray assigned = new JSONArray();
         for (Tuple t : assignedRecipes)
             assigned.put(t.toJson());
-        JSONObject trades = new JSONObject();
+        JSONObject recipes = new JSONObject();
         for (String key : availableRecipes.keySet())
-            trades.put(key, availableRecipes.get(key).toJson());
+            recipes.put(key, availableRecipes.get(key).toJson());
         return new JSONObject()
-            .put("trades", trades)
+            .put("recipes", recipes)
             .put("assigned", assigned);
     }
 
     @Override
-    public CustomTrades fromJson(String json) throws IOException {
-        CustomTrades customTrades = new CustomTrades();
+    public CustomRecipes fromJson(String json) throws IOException {
+        CustomRecipes customRecipes = new CustomRecipes();
         JSONObject data = new JSONObject(json);
         for (Object jsonTuple : data.getJSONArray("assigned")){
             Tuple t = new Tuple().fromJson(jsonTuple.toString());
-            customTrades.assignedRecipes.add(t);
+            customRecipes.assignedRecipes.add(t);
         }
-        for (String key : data.getJSONObject("trades").keySet()) {
-            customTrades.availableRecipes.put(
+        for (String key : data.getJSONObject("recipes").keySet()) {
+            customRecipes.availableRecipes.put(
                 key,
                 new MerchantRecipeSerializable().fromJson(
                     data
-                        .getJSONObject("trades")
+                        .getJSONObject("recipes")
                         .getJSONObject(key)
                         .toString()
                 )
             );
         }
-        return customTrades;
+        return customRecipes;
     }
 }

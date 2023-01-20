@@ -3,27 +3,27 @@ version: alpha-0.1
 main: de.qweide.citizenstrader.CitizensTraderPlugin
 api-version: 1.15
 commands:
-  addtrade:
-    description: adds a custom trade recipe
-    usage: /<command> <tradename> <result> <amount> <ingredient> <amount> [<ingredient> <amount>]
-    permission: citizenstrader.trades
-  listtrades:
-    description: lists the name of all trades or the details of a specific trade
-    usage: /<command> [<tradename>]
-    permission: citizenstrader.trades
-  deletetrade:
-    description: deletes the trade with the given name and all of its assignments
-    usage: /<command> <tradename>
-    permission: citizenstrader.trades
-  assigntrade:
-    description: assigns a custom trade recipe name to an npc
+  addrecipe:
+    description: adds a custom recipe recipe
+    usage: /<command> <recipename> <result> <amount> <ingredient> <amount> [<ingredient> <amount>]
+    permission: citizenstrader.recipes
+  listrecipes:
+    description: lists the name of all recipes or the details of a specific recipe
+    usage: /<command> [<recipe>]
+    permission: citizenstrader.recipes
+  deleterecipe:
+    description: deletes the recipe with the given name and all of its assignments
+    usage: /<command> <recipe>
+    permission: citizenstrader.recipes
+  assignrecipe:
+    description: assigns a custom recipe recipe name to an npc
     usage: /<command> <recipename> <npcid>
     permission: citizenstrader.assignments
   assignlist:
-    description: lists all trades that are assigned to a given npc
+    description: lists all recipes that are assigned to a given npc
     usage: /<command> <npcid>
     permission: citizenstrader.assignments
   assigndelete:
-    description: deletes all or a specified trade that is assigned to a given npc
-    usage: /<command> <npcid> [<tradename>]
+    description: deletes all or a specified recipe that is assigned to a given npc
+    usage: /<command> <npcid> [<recipe>]
     permission: citizenstrader.assignments

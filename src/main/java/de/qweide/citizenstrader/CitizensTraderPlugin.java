@@ -7,18 +7,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Merchant;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.checkerframework.checker.units.qual.C;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.OpenOption;
-import java.nio.file.StandardOpenOption;
 import java.util.logging.Level;
 
 public class CitizensTraderPlugin extends JavaPlugin {
 
-    private CustomTrades customTrades;
+    private CustomRecipes customRecipes;
     @Override
     public void onEnable() {
         getLogger().info("Citizens Trader Plugin enabled.");
@@ -27,32 +24,32 @@ public class CitizensTraderPlugin extends JavaPlugin {
                 .registerTrait(
                         net.citizensnpcs.api.trait.TraitInfo.create(TraderTrait.class)
                 );
-        customTrades = new CustomTrades();
+        customRecipes = new CustomRecipes();
         File file = new File(getDataFolder(), "data.json");
         if (file.exists()) {
             try {
-                customTrades = new CustomTrades().fromJson(
+                customRecipes = new CustomRecipes().fromJson(
                     Files.readString(file.toPath())
                 );
                 getLogger().log(
                     Level.INFO,
                     String.format(
-                        "Loaded %s trades and %s trade assignments",
-                        customTrades.getTradeCount(),
-                        customTrades.getAssignedCount()
+                        "Loaded %s recipes and %s recipe assignments",
+                        customRecipes.getRecipeCount(),
+                        customRecipes.getAssignedCount()
                     )
                 );
             } catch (IOException e) {
                 getLogger().log(
                     Level.WARNING,
-                    "No trades and assignments have been loaded because of an error:");
+                    "No recipes and assignments have been loaded because of an error:");
                 getLogger().log(Level.SEVERE, e.getMessage());
             }
 
         }
-        RecipeCommands commands = new RecipeCommands(customTrades);
+        RecipeCommands commands = new RecipeCommands(customRecipes);
         for(String command : new String[]{
-            "addtrade", "assigntrade", "listtrades", "deletetrade",
+            "addrecipe", "assignrecipe", "listrecipes", "deleterecipe",
             "assignlist", "assigndelete"
         }){
             this.getCommand(command).setTabCompleter(commands);
@@ -71,14 +68,14 @@ public class CitizensTraderPlugin extends JavaPlugin {
                 file.createNewFile();
             Files.writeString(
                 file.toPath(),
-                customTrades.toJson().toString(4)
+                customRecipes.toJson().toString(4)
             );
             getLogger().log(
                 Level.INFO,
                 String.format(
-                    "Saved %s trades and %s trade assignments",
-                    customTrades.getTradeCount(),
-                    customTrades.getAssignedCount()
+                    "Saved %s recipes and %s recipe assignments",
+                    customRecipes.getRecipeCount(),
+                    customRecipes.getAssignedCount()
                 )
             );
         } catch (IOException e) {
@@ -95,11 +92,11 @@ public class CitizensTraderPlugin extends JavaPlugin {
 
     public void openTrade(NPC npc, Player clickPlayer) {
         Merchant merchant = Bukkit.createMerchant(npc.getRawName());
-        merchant.setRecipes(customTrades.getAssignedRecipes(npc.getId()));
+        merchant.setRecipes(customRecipes.getAssignedRecipes(npc.getId()));
         clickPlayer.openMerchant(merchant, true);
     }
 
     public void onNpcRemoved(int npcId) {
-        this.customTrades.deleteAssignment(npcId);
+        this.customRecipes.deleteAssignment(npcId);
     }
 }

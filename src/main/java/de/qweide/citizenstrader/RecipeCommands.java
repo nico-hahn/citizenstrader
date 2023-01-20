@@ -15,16 +15,16 @@ import java.util.stream.Collectors;
 
 public class RecipeCommands implements CommandExecutor, TabCompleter {
 
-    private final CustomTrades trades;
+    private final CustomRecipes recipes;
 
-    public RecipeCommands(CustomTrades trades) {
-        this.trades = trades;
+    public RecipeCommands(CustomRecipes recipes) {
+        this.recipes = recipes;
     }
 
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
         switch (label) {
-            case "addtrade":
-                return executeAddTrade(
+            case "addrecipe":
+                return executeAddRecipe(
                     commandSender,
                     args[0],
                     args[1].toUpperCase(),
@@ -34,16 +34,16 @@ public class RecipeCommands implements CommandExecutor, TabCompleter {
                     args.length >= 6 ? args[5].toUpperCase() : null,
                     args.length >= 7 ? Integer.parseInt(args[6]) : null
                 );
-            case "assigntrade":
-                return executeAssignTrade(
+            case "assignrecipe":
+                return executeAssignRecipe(
                     commandSender, args[0], Integer.parseInt(args[1])
                 );
-            case "listtrades":
-                return executeListTrades(
+            case "listrecipes":
+                return executeListRecipes(
                     commandSender, args.length >= 1 ? args[0] : null
                 );
-            case "deletetrade":
-                return executeDeleteTrade(
+            case "deleterecipe":
+                return executeDeleteRecipe(
                     commandSender,
                     args[0]
                 );
@@ -71,13 +71,22 @@ public class RecipeCommands implements CommandExecutor, TabCompleter {
         String alias,
         String[] args
     ){
-        if(command.getName().equalsIgnoreCase("addtrade")){
-            /*if(args.length == 1) {
-                return trades
-                    .getTradeNames()
-                    .stream().filter(p -> p.contains(args[0]))
-                    .collect(Collectors.toList());
-            }*/
+        if (
+            command.getName().equalsIgnoreCase("deleterecipe") ||
+            command.getName().equalsIgnoreCase("listrecipes") ||
+            command.getName().equalsIgnoreCase("addrecipe") ||
+            command.getName().equalsIgnoreCase("assignrecipe")
+        ) {
+            if (args.length == 1) {
+                return getRecipeNames(args[0]);
+            }
+        }
+        if (command.getName().equalsIgnoreCase("assigndelete")) {
+            if (args.length == 2) {
+                return getRecipeNames(args[1]);
+            }
+        }
+        if (command.getName().equalsIgnoreCase("addrecipe")){
             if (args.length == 2 || args.length == 4 || args.length == 6){
                 return Arrays
                     .stream(Material.values())
@@ -89,7 +98,13 @@ public class RecipeCommands implements CommandExecutor, TabCompleter {
         return null;
     }
 
-    private boolean executeAddTrade(
+    private List<String> getRecipeNames(String filter) {
+        return recipes
+            .getRecipeNames()
+            .stream().filter(p -> p.contains(filter))
+            .collect(Collectors.toList());
+    }
+    private boolean executeAddRecipe(
         CommandSender sender,
         String recipeName,
         String resultMaterialName,
@@ -123,37 +138,37 @@ public class RecipeCommands implements CommandExecutor, TabCompleter {
         if(material2In != null && ingredient2MaterialCount != null) {
             recipe.addIngredient(new ItemStack(material2In, ingredient2MaterialCount));
         }
-        trades.addRecipe(recipeName, recipe);
-        sender.sendMessage("Added trade successfully.");
+        recipes.addRecipe(recipeName, recipe);
+        sender.sendMessage("Added recipe successfully.");
         return true;
     }
 
-    private boolean executeAssignTrade(
+    private boolean executeAssignRecipe(
         CommandSender sender,
         String recipeName,
         int npcId
     ) {
-        boolean result = trades.assignRecipe(npcId, recipeName);
+        boolean result = recipes.assignRecipe(npcId, recipeName);
         if (result)
-            sender.sendMessage("Assigned trade successfully.");
+            sender.sendMessage("Assigned recipe successfully.");
         return result;
     }
 
-    private boolean executeListTrades(
+    private boolean executeListRecipes(
         CommandSender sender,
-        String tradeName
+        String recipeName
     ) {
-        if (tradeName == null){
+        if (recipeName == null){
             sender.sendMessage(
-                "Names of all custom trades:",
-                String.join(", ", new ArrayList<>(trades.getTradeNames()))
+                "Names of all custom recipes:",
+                String.join(", ", new ArrayList<>(recipes.getRecipeNames()))
             );
         }
         else {
-            if (trades.getTradeNames().contains(tradeName)) {
+            if (recipes.getRecipeNames().contains(recipeName)) {
                 StringBuilder sb = new StringBuilder();
                 sb.append("Takes: ");
-                MerchantRecipe recipe = trades.getRecipeByName(tradeName);
+                MerchantRecipe recipe = recipes.getRecipeByName(recipeName);
                 for(ItemStack i : recipe.getIngredients()) {
                     sb.append(i.getAmount());
                     sb.append("x");
@@ -167,21 +182,21 @@ public class RecipeCommands implements CommandExecutor, TabCompleter {
                 sender.sendMessage(sb.toString());
             }
             else {
-                sender.sendMessage("Specified trade does not exist.");
+                sender.sendMessage("Specified recipe does not exist.");
             }
         }
         return true;
     }
 
-    private boolean executeDeleteTrade(
+    private boolean executeDeleteRecipe(
         CommandSender sender,
-        String tradeName
+        String recipeName
     ) {
         sender.sendMessage(String.format(
-            trades.deleteRecipe(tradeName) ?
-                "Trade %s has been deleted." :
-                "Trade %s has not been found.",
-            tradeName
+            recipes.deleteRecipe(recipeName) ?
+                "Recipe %s has been deleted." :
+                "Recipe %s has not been found.",
+            recipeName
         ));
         return true;
     }
@@ -191,8 +206,8 @@ public class RecipeCommands implements CommandExecutor, TabCompleter {
         int npcId
     ) {
         sender.sendMessage(
-            String.format("Trades assigned to npc %s", npcId),
-            String.join(", ", trades.getAssignedRecipeNames(npcId))
+            String.format("Recipes assigned to npc %s:", npcId),
+            String.join(", ", recipes.getAssignedRecipeNames(npcId))
         );
         return true;
     }
@@ -200,13 +215,13 @@ public class RecipeCommands implements CommandExecutor, TabCompleter {
     private boolean executeDeleteAssignment(
         CommandSender sender,
         int npcId,
-        String tradeName
+        String recipeName
     ) {
         sender.sendMessage(
-            trades.deleteAssignment(npcId, tradeName) ?
+            recipes.deleteAssignment(npcId, recipeName) ?
                 String.format(
                     "Assignment(s)%s to NPC %s deleted successfully.",
-                    (tradeName != null) ? String.format(" of trade %s", tradeName) : "",
+                    (recipeName != null) ? String.format(" of recipe %s", recipeName) : "",
                     npcId
                 ) :
                 "Assignment(s) not found. Nothing has been deleted."
